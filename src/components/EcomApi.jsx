@@ -9,31 +9,43 @@ const EcomApi = () => {
 
   useEffect(() => {
     const myEcom = async () => {
-      const res = await fetch("https://fakestoreapi.com/products/");
+      const res = await fetch("https://fakestoreapi.com/products/1");
       const data = await res.json();
       setFakeStore(data);
     };
     myEcom();
   }, []);
 
-  //   const {title} = fakeStore //use it when only one product is
-  // specified in the "https://fakestoreapi.com/products/1"
+  const { title } = fakeStore;
 
+  //add to cart function
+  const addToCart = (title) => {
+    setCart([title]);
+  };
 
+  //remove to cart function
+  const removeToCart = () => {
+    setCart([]);
+  };
 
   return (
     <div>
-      {fakeStore.map((store, id) => {
-        const { title } = store;
-        return (
-          <div key={id}>
-            {title}
-            <button className="border border-black">add</button>
-          </div>
-        );
-      })}
-
-      <div className="mt-10">PRODUCT CART</div>
+      PRODUCTS
+      <p>{title}</p>
+      <button className="border border-black" onClick={() => addToCart(title)}>
+        ADD to cart
+      </button>
+      <div className="mt-10">
+        PRODUCT CART
+        <p>{cart}</p>
+        {cart.length > 0 && (
+          <button
+            className="border border-black"
+            onClick={() => removeToCart()}>
+            Remove
+          </button>
+        )}
+      </div>
     </div>
   );
 };

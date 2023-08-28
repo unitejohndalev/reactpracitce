@@ -1,6 +1,5 @@
-// import TodoListPractice from "./components/TodoListPractice";
+import AxiosPractice from "./components/AxiosPractice";
 
-import EcomApi from "./components/ecomApi";
 
 
 
@@ -10,8 +9,7 @@ function App() {
 
   return (
     <>
-   {/* <TodoListPractice/> */}
-   <EcomApi/>
+  <AxiosPractice/>
     </>
   );
 }
