@@ -9,7 +9,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 //get function using axios
 const fetchPosts = async () => {
   try {
-    const { data } = await axios.get(`${API_URL}?_limit=10`);
+    const { data } = await axios.get(`${API_URL}?_limit=3`);
     return data;
   } catch (err) {
     console.log(err);
@@ -48,7 +48,7 @@ const AxiosPractice = () => {
   //post state for post in array
   const [posts, setPosts] = useState([]);
 
-  console.log(posts);
+
 
   //managing side effect in calling api
   useEffect(() => {

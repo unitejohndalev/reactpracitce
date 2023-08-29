@@ -1,4 +1,6 @@
-import AxiosPractice from "./components/AxiosPractice";
+
+import TodoList from "./components/todolist/TodoList";
+
 
 
 
@@ -9,7 +11,7 @@ function App() {
 
   return (
     <>
-  <AxiosPractice/>
+<TodoList/>
     </>
   );
 }
