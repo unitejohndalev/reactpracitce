@@ -1,22 +1,24 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
 
-const TodoItem = ({todo, onEditClick, onDeleteClick, todos}) => {
+const TodoItem = ({ onEditClick, onDeleteClick, todos, isEditing }) => {
   return (
     <div>
       {todos.map((todo) => {
         return (
-          <li key={todo.id}>
+          <ul key={todo.id}>
             {todo.text}
-            <button
-            onClick={() => onEditClick(todo)}
-            >Edit</button>
-            <button onClick={() => onDeleteClick(todo.id)}>Delete</button>
-          </li>
-        )
+            { !isEditing &&
+              <>
+                <button onClick={() => onEditClick(todo)}>Edit</button>
+                <button onClick={() => onDeleteClick(todo.id)}>Delete</button>
+              </>
+            }
+          </ul>
+        );
       })}
     </div>
-  )
-}
+  );
+};
 
 export default TodoItem
