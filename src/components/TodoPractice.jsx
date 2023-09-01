@@ -2,26 +2,23 @@ import React, { useEffect, useState } from "react";
 
 const TodoPractice = () => {
   const [todos, setTodos] = useState(() => {
-    const getTodo = localStorage.getItem("todos");
-    if (getTodo) {
-      return JSON.parse(getTodo);
+    const getTodos = localStorage.getItem("todos")
+    if(getTodos) {
+      return JSON.parse(getTodos)
     }
-    return [];
+    return []
   });
-
-  useEffect(() => {
-    localStorage.setItem("todos", JSON.stringify(todos));
-  }, [todos]);
-
   const [todo, setTodo] = useState("");
-  const [isEditing, setIsEditing] = useState(false);
+
   const [currentTodo, setCurrentTodo] = useState({});
+  const [isEditing, setIsEditing] = useState(false);
 
-  const handleInputChange = (e) => {
-    setTodo(e.target.value);
-  };
+  
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos))
+  }, [todos])
 
-  const handleAddFormSubmit = (e) => {
+  const addSubmitForm = (e) => {
     e.preventDefault();
     if (todo !== "") {
       setTodos([
@@ -35,63 +32,67 @@ const TodoPractice = () => {
     setTodo("");
   };
 
-  const handleDelete = (id) => {
+  const deleteTodo = (id) => {
     const removeTodo = todos.filter((todo) => todo.id !== id);
     setTodos(removeTodo);
   };
 
-  const handleEdit = (todo) => {
-    setIsEditing(true);
-    setCurrentTodo({ ...todo });
-  };
+  const editTodo = (todo) => {
+    setIsEditing(true)
+    setCurrentTodo({...todo})
+  }
 
-  const handleEditFormSubmit = (e) => {
-    e.preventDefault();
-    handleUpdate(currentTodo.id, currentTodo);
-  };
+  const updateOnChange = (e) => {
+    setCurrentTodo({...currentTodo, text:e.target.value})
+  }
 
   const handleUpdate = (id, updatedTodo) => {
-    const updateItem = todos.map((todo) => {
-      return todo.id === id ? updatedTodo : todo;
-    });
+    const updateTodo = todos.map((todo) => {
+      return todo.id === id ? updatedTodo : todo
+    })
+    setTodos(updateTodo)
+    setIsEditing(false)
+  }
 
-    setIsEditing(false);
-    setTodos(updateItem);
-  };
-
-  const handleEditInputChange = (e) => {
-    setCurrentTodo({ ...currentTodo, text: e.target.value });
-  };
-
+  const updateSubmitForm = (e) => {
+    e.preventDefault()
+    handleUpdate(currentTodo.id, currentTodo)
+  }
+  console.log(todos);
   return (
     <div>
       {isEditing ? (
-        <form onSubmit={handleEditFormSubmit}>
+        <form onSubmit={updateSubmitForm}>
           <input
             type="text"
             value={currentTodo.text}
-            onChange={handleEditInputChange}
+            onChange={updateOnChange}
           />
           <button type="submit">Update</button>
+          <button onClick={() => setIsEditing(prev => !prev)}>Cancel</button>
         </form>
       ) : (
-        <form onSubmit={handleAddFormSubmit}>
-          <input type="text" value={todo} onChange={handleInputChange} />
-          <button type="submit">Add todo</button>
+        <form onSubmit={addSubmitForm}>
+          <input
+            type="text"
+            value={todo}
+            onChange={(e) => setTodo(e.target.value)}
+          />
+          <button type="submit">Add</button>
         </form>
       )}
 
-      <>
+      <div>
         {todos.map((todo) => {
           return (
             <div key={todo.id}>
               {todo.text}
-              <button onClick={() => handleDelete(todo.id)}>Remove</button>
-              <button onClick={() => handleEdit(todo)}>Edit</button>
+              <button onClick={() => deleteTodo(todo.id)}>Delete</button>
+              <button onClick={() => editTodo(todo)}>Edit</button>
             </div>
           );
         })}
-      </>
+      </div>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 
 import TodoPractice from "./components/TodoPractice";
-import TodoList from "./components/todolist/TodoList";
+import ApiPractice from "./components/api/ApiPractice";
+
 
 
 
@@ -14,6 +15,7 @@ function App() {
     <>
 
 <TodoPractice/>
+{/* <ApiPractice/> */}
     </>
   );
 }
